@@ -1,5 +1,7 @@
 FROM tunstall/build_env_ubuntu_18.04:latest
 
+USER root
+
 # apt
 RUN apt-get update -y
 
@@ -10,6 +12,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
 # nice to have extras
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
 	openjdk-11-jdk
+
+# nice to have extras
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
+	git
 
 USER docker
 
