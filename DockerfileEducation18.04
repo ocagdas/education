@@ -1,17 +1,40 @@
-FROM tunstall/build_env_ubuntu_18.04:latest
+FROM ubuntu:bionic-20180821
 
-USER root
+# change sh from, possibly, dash to bash
+RUN cd /bin && rm sh && ln -s bash sh
 
 # apt
 RUN apt-get update -y
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
+	--no-install-recommends apt-utils
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
+	vim bash-completion sudo
+
+# build-essential and other build/make package
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
+	build-essential make cmake cmake-curses-gui python3 \
+	flex bison automake bc
+
+# testing extras
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
+	cppcheck openjdk-11-jdk git gdb
 
 # build-essential and other build/make package
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
 	iproute2 traceroute inetutils-ping dnsutils ssh
 
-# nice to have extras
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
-	openjdk-11-jdk git gdb
+# user setup
+RUN useradd docker -d /home/docker -m -s /bin/bash &&\
+ 	passwd -d docker &&\
+	echo "docker  ALL=(ALL)       NOPASSWD: ALL" >> /etc/sudoers; echo "Defaults    !requiretty" >> /etc/sudoers
+
+RUN useradd ssher -d /home/ssher -m -s /bin/bash &&\
+ 	passwd -d ssher &&\
+	echo "ssher  ALL=(ALL)       NOPASSWD: ALL" >> /etc/sudoers; echo "Defaults    !requiretty" >> /etc/sudoers
+
+RUN echo "ssher:123Qwe" | chpasswd
 
 USER docker
 
@@ -20,4 +43,5 @@ VOLUME ["$EXPORT_DIR"]
 WORKDIR $EXPORT_DIR
 
 #ENTRYPOINT ["tail", "-f", "/dev/null"]
+ENTRYPOINT sudo service ssh restart && bash
 
