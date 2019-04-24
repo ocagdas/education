@@ -1,5 +1,5 @@
-# build_env_ubuntu_18.04
-basic embedded sw dev playground based on ubuntu 18.04
+# education
+basic ubuntu build, test, education playground
 
 # docker build
 ```
