@@ -1,4 +1,4 @@
-FROM zmart/base_ubuntu_18_04:latest
+FROM zmart/base_ubuntu:latest
 
 # apt
 RUN apt clean -y
