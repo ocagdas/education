@@ -106,6 +106,13 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
 	kpartx dosfstools xxd \
 	smbclient
 
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
+	iotop \
+	htop \
+	sysstat \
+	ftp \
+	iperf
+
 # cleanup apt data
 RUN apt remove --autoremove
 RUN rm -rf /var/lib/apt/lists/*
