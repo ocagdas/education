@@ -113,6 +113,14 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
 	ftp \
 	iperf
 
+RUN pip3 install pandas numpy \
+	matplotlib \
+	elasticsearch \
+	jira \
+	joblib \
+	pymongo \
+	jira
+
 # cleanup apt data
 RUN apt remove --autoremove
 RUN rm -rf /var/lib/apt/lists/*
@@ -122,4 +130,3 @@ VOLUME ["$EXPORT_DIR"]
 WORKDIR $EXPORT_DIR
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-
