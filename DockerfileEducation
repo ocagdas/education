@@ -121,6 +121,8 @@ RUN pip3 install pandas numpy \
 	pymongo \
 	jira
 
+RUN pip3 install scipy
+
 # cleanup apt data
 RUN apt remove --autoremove
 RUN rm -rf /var/lib/apt/lists/*
